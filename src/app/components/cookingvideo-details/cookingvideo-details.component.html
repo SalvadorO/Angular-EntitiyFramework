@@ -1,0 +1,144 @@
+<div *ngIf="viewMode; else editable">
+  <div *ngIf="currentVideo.id">
+    <h4>Cooking Clip</h4>
+    <div class="card" style="width: 18rem">
+      <img
+        class="card-img-top"
+        src="https://img.youtube.com/vi/p3EwVIpzFjI/default.jpg"
+        alt="Card image cap"
+      />
+      <div class="card-body">
+        <h5 class="card-title">
+          <strong>{{ currentVideo.title }}</strong>
+        </h5>
+        <hr />
+
+        <p class="card-text">
+          <strong>Category:</strong> {{ currentCategory.categoryName }}
+        </p>
+
+        <div>
+          <label><strong>Status:</strong></label>
+          {{ currentVideo.isHidden ? "Hidden" : "Visible" }}
+        </div>
+        <button
+          class="m-2 btn btn-m btn-success"
+          routerLink="/cookingvideos/{{ currentVideo.id }}"
+        >
+          Edit
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="!currentVideo">
+    <br />
+  </div>
+</div>
+
+<ng-template #editable>
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="/">Home</a></li>
+      <li class="breadcrumb-item">
+        <a href="/cookingvideos">cookingvideos</a>
+      </li>
+      <li class="breadcrumb-item active" aria-current="page">
+        <a href="/">{{ this.currentVideo.id }}</a>
+      </li>
+    </ol>
+  </nav>
+
+  <div *ngIf="currentVideo.id" class="edit-form">
+    <h4>Edit Clip</h4>
+    <form>
+      <div class="form-group">
+        <label for="title">Title</label>
+        <input
+          type="text"
+          class="form-control"
+          id="title"
+          [(ngModel)]="currentVideo.title"
+          name="title"
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="category">Category</label>
+
+        <select
+          id="categories"
+          class="form-control"
+          name="categoryDropDown"
+          id="categoryDropDown"
+          [(ngModel)]="categories"
+        >
+          <option
+            selected
+            *ngFor="let category of categoryList$ | async"
+            [ngValue]="category"
+          >
+            {{ category.categoryName }}
+          </option>
+        </select>
+      </div>
+
+      <br />
+
+      <div class="form-group">
+        <label><strong>Status:</strong></label>
+        {{ currentVideo.isHidden ? "Hidden" : "Visible" }}
+      </div>
+    </form>
+
+    <button
+      class="m-3 btn btn-sm btn-primary"
+      *ngIf="currentVideo.isHidden"
+      (click)="updateHidden(false)"
+    >
+      Show
+    </button>
+
+    <button
+      *ngIf="!currentVideo.isHidden"
+      class="m-3 btn btn-sm btn-primary"
+      (click)="updateHidden(true)"
+    >
+      Hide
+    </button>
+
+    <button class="m-3 btn btn-sm btn-danger" (click)="deleteCookingVideo()">
+      Delete
+    </button>
+
+    <button
+      type="submit"
+      class="m-3 btn btn-sm btn-success"
+      (click)="updateCookingVideo()"
+    >
+      Update
+    </button>
+
+  </div>
+
+  <div *ngIf="!currentVideo.id">
+    <br />
+  </div>
+
+  TODO: FIX THIS
+  <div class="alert alert-success" role="alert" id="add-success-alert">
+    Cooking Video Successfully Added
+  </div>
+
+  <div class="alert alert-success" role="alert" id="update-success-alert">
+    Cooking Video successfully Updated
+  </div>
+
+  <div class="alert alert-success" role="alert" id="videoHidden-success-alert">
+    Cooking Video is hidden
+  </div>
+
+  <div class="alert alert-warning" role="alert" id="delete-success-alert">
+    Deleted successfully
+  </div>
+</ng-template>

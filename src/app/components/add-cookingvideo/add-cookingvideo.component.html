@@ -1,0 +1,57 @@
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="#">Home</a></li>
+    <li class="breadcrumb-item active" aria-current="page">
+      <a href="/add">add</a>
+    </li>
+  </ol>
+</nav>
+
+<div>
+  <div class="submit-form">
+    <div *ngIf="!submitted">
+      <div class="form-group">
+        <label for="title">Title</label>
+        <input
+          type="text"
+          class="form-control"
+          id="title"
+          required
+          [(ngModel)]="cookingvideo.title"
+          name="title"
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="category">Category</label>
+        <select
+          class="form-control"
+          id="exampleFormControlSelect1"
+          [(ngModel)]="categories"
+        >
+          <option
+            *ngFor="let person of categoryList$ | async"
+            [ngValue]="person"
+          >
+            {{ person.categoryName }}
+          </option>
+        </select>
+      </div>
+
+      <br />
+
+      <br />
+      <button (click)="saveNewCookingVideo()" class="btn btn-success">
+        Submit
+      </button>
+    </div>
+    <div *ngIf="submitted">
+      <button
+        class="btn btn-success"
+        (click)="addNewCookingvideo(cookingvideo)"
+      >
+        Add
+      </button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,78 @@
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="/">Home</a></li>
+    <li class="breadcrumb-item active" aria-current="page">
+      <a href="/cookingvideos">cookingvideos</a>
+    </li>
+  </ol>
+</nav>
+
+<div class="list row">
+  <div class="col-md-6">
+    <h4>All Cooking Videos</h4>
+    <ul class="list-group">
+      <li
+        class="list-group-item"
+        *ngFor="let video of cookingvideos; let i = index"
+        [class.active]="i == currentIndex"
+        (click)="setActiveVideo(video, i)"
+      >
+        {{ video.title }}
+      </li>
+    </ul>
+  </div>
+  <div class="col-md-6">
+    <app-cookingvideo-details
+      [viewMode]="true"
+      [currentVideo]="currentVideo"
+      [currentCategory]="currentCategory"
+    ></app-cookingvideo-details>
+  </div>
+</div>
+
+<br />
+
+<div *ngFor="let category of categoryList">
+  <div *ngIf="category.isActive === true">
+    <div class="row row-cols-4 row-cols-md-4">
+      <div class="col mb-4">
+        <div class="card h-100">
+          <img
+            class="card-img-top"
+            src="https://img.youtube.com/vi/p3EwVIpzFjI/default.jpg"
+            alt="Card image cap"
+          />
+          <div class="card-body">
+            <h5 class="card-title">{{ "" }}</h5>
+            <p class="card-text">.</p>
+            <button>Edit</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<table class="table table-striped">
+  <thead>
+    <th>Id</th>
+    <th>Title</th>
+    <th>Category</th>
+    <th>IsHidden</th>
+    <th>CategoryStatus</th>
+    <th>Edit</th>
+  </thead>
+  <tbody>
+    <tr *ngFor="let video of cookingVideoList$ | async">
+      <td>{{ video.id }}</td>
+      <td>{{ video.title }}</td>
+      <td>{{ categoryMap.get(video.categoryId) }}</td>
+      <td>{{ video.isHidden }}</td>
+      <td>{{ video.categoryId }}</td>
+    </tr>
+  </tbody>
+</table>
+
+<button class="btn btn-success butty" (click)="getActiveCategories()">Add new</button>
+
+<br />
