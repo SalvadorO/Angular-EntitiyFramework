@@ -2,6 +2,11 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.3.1.
 
+Listening to port from backend. Change it if needed /src/app/services/cookingvideo.service.ts
+
+after running WebApi in Visual Studio 2022 use "dotnet ef migrations add InitialCreate" and
+"dotnet ef database update". 
+
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
